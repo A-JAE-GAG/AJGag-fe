@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { getCookie } from "../infos/cookie";
 
 class Axios {
-  private instance: AxiosInstance;
+  public instance: AxiosInstance;
 
   constructor(url: string) {
     this.instance = axios.create({
@@ -39,6 +39,9 @@ class Axios {
       Authorization: cookie || "",
       ...option?.headers,
     };
+    console.log(this.instance)
+    console.log(url)
+    console.log(data)
     const response = await this.instance.post<T>(url, data, { headers });
     return response.data;
   }
