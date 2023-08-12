@@ -3,14 +3,18 @@ import { styled } from 'styled-components';
 import MainButton from '../components/MainButton';
 import LoginModal from '../components/LoginModal';
 import { useRecoilValue } from "recoil";
-import { loginState } from '../store/atom';
+import { gagModalState, loginState } from '../store/atom';
+import GagModal from '../components/GagModal';
 
 
 function Main (){
     const LoginState = useRecoilValue(loginState);
+    const GagModalState = useRecoilValue(gagModalState);
   
       return (<>
+      
       <Maincontainer>
+      {GagModalState === true && <GagModal/>}
       {LoginState === true && <LoginModal />}
         <MainTitleContainer>
         <h1>ㅇㅈ개그</h1>

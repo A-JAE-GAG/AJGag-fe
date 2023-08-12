@@ -2,7 +2,9 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState } from '../store/atom';
+import { gagModalState, loginState } from '../store/atom';
+import GagModal from '../components/GagModal';
+import { getLocalStorage } from '../utils/infos/loaclStorage';
 
 interface MainButtonProps {
     name : string;
@@ -13,13 +15,14 @@ function MainButton (props: MainButtonProps){
     const {name, link} = props;
     const navigate = useNavigate();
     const LoginState = useSetRecoilState(loginState);
+    const GagModalState = useSetRecoilState(gagModalState)
   
     const ButtonActive = () =>{
         if(link != ""){
             navigate(link)
         }
         else{
-            LoginState(true)
+            getLocalStorage("username") == null || undefined ?LoginState(true) :GagModalState(true)
         }
     }
 

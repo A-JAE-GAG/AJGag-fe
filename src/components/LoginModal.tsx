@@ -6,6 +6,7 @@ import { postEmailConfirm, postSignIn, postSignUp } from '../utils/api/api';
 import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
 import { useForm, Controller } from 'react-hook-form';
+import { getLocalStorage } from '../utils/infos/loaclStorage';
 
 function LoginModal() {
 
@@ -43,6 +44,7 @@ function LoginModal() {
   const SignInMutation = useMutation<any>(postSignIn,{
     onSuccess: ({ data }) => {
       console.log("로그인 성공")
+      window.location.reload()
     },
     onError: (error) => {
       console.log("로그인 실패")
