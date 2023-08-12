@@ -1,4 +1,4 @@
-import { setCookie } from "../infos/cookie";
+import { getCookie, setCookie } from "../infos/cookie";
 import { setLocalStorage } from "../infos/loaclStorage";
 import Axios from "./axios";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
@@ -27,6 +27,17 @@ export const postEmailConfirm = async (data : any)  => {
   export const postSignIn = async (data :any) =>{
     console.log(data)
     const res = await apiClient.post(`/api/users/login`, data)
+    setLocalStorage("username", res?.data?.data.nickname)
+    setCookie("token", res?.data?.data.token)
     console.log(res)
+    return res
+  }
+  export const postGag = async (data :any) =>{
+    const cookie = getCookie("token");
+    const headers = {
+      Authorization: cookie
+    };
+    console.log(data)
+    const res = await apiClient.post(`/api/gag`, data, { headers })
     return res
   }
