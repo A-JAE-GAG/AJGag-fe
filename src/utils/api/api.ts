@@ -19,7 +19,6 @@ export const postEmailConfirm = async (data : any)  => {
   export const postSignUp = async (data : any)  => {
     console.log(data)
     console.log(process.env.REACT_APP_BASEURL as string)
-    console.log(apiClient) 
     const res = /*"asdasd"//*/await apiClient.post(`/api/users/signup`, data);
     return res;
   };
