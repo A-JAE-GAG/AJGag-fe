@@ -5,11 +5,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { gagModalState, loginState } from '../store/atom';
 import GagModal from '../components/GagModal';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
-
-interface MainButtonProps {
-    name : string;
-    link : string;
-}
+import { MainButtonProps } from '../utils/infos/types';
 
 function MainButton (props: MainButtonProps){
     const {name, link} = props;

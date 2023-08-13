@@ -7,6 +7,7 @@ import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
+import { ButtonProps } from '../utils/infos/types';
 
 function LoginModal() {
 
@@ -205,10 +206,6 @@ justify-content: center;
 height: 100%;
 `
 
-interface ButtonProps {
-  width?: string;
-  height?: string;
-}
 const ButtonStyled = styled.button<ButtonProps>`
 background-color: rgb(217, 217, 217);
   width: ${props => (props.width ? props.width : '80px')};

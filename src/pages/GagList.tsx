@@ -2,20 +2,19 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useForm, Controller } from 'react-hook-form';
 import GagListComp from '../components/GagListComp';
+import { FormData } from '../utils/infos/types';
 
-interface FormData {
-  input1: string;
-  input2: string;
-}
 
 function GagList() {
   const { handleSubmit, control, watch } = useForm<FormData>();
   const input1Value = watch('input1', '');
   const input2Value = watch('input2', '');
   const [currentPageNum, setCurrentPageNum] = useState<number>(1)
+  const [standardPageNum, setStandardPageNum] = useState<number>(0)
   const [MaxPageNum, setMaxPageNum] = useState<number>(10)
 
   const [selectedOption, setSelectedOption] = useState('최신'); // Initial selection
+  
 
   const handleButtonClick = (value: string) => {
     setSelectedOption(value);
@@ -56,21 +55,19 @@ function GagList() {
     </UpsideBox>
     <GagOverlay></GagOverlay>
     <ListBox>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
-      <GagListComp></GagListComp>
+      <GagListComp isreaded = {false} username='김호이'></GagListComp>
+      <GagListComp isreaded = {false} username='김호이'></GagListComp>
+      <GagListComp isreaded = {false} username='김호이'></GagListComp>
+      <GagListComp isreaded = {false} username='김호이'></GagListComp>
+      <GagListComp isreaded = {true} username='김호이'></GagListComp>
+      <GagListComp isreaded = {true} username='김호이'></GagListComp>
+      <GagListComp isreaded = {true} username='김호이'></GagListComp>
+      <GagListComp isreaded = {true} username='김호이'></GagListComp>
+      <GagListComp isreaded = {true} username='김호이'></GagListComp>
+      <GagListComp isreaded = {true} username='김호이'></GagListComp>
+      <GagListComp isreaded = {true} username='김호이'></GagListComp>
+      <GagListComp isreaded = {false} username='김호이'></GagListComp>
+      <GagListComp isreaded = {false} username='김호이'></GagListComp>
     </ListBox>
     <PageBox>
 
