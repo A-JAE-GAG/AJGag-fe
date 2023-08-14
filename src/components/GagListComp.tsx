@@ -17,11 +17,18 @@ function GagListComp (props : GagListCompProps){
         왕이 넘어지면?
       </h3>
       <h4>
-        왕이 넘어지면?
+        썰렁 아재
       </h4>
       <GagBoxInsideBoxWrapper>
-      <GagBoxInsideBox></GagBoxInsideBox>
-      <GagBoxInsideBox></GagBoxInsideBox>
+      <GagBoxInsideBox>
+        <span>정답률<br/>52%</span>
+        <span></span>
+      </GagBoxInsideBox>
+      <GagBoxInsideBox>
+        <span>인정<br/>15</span>
+        <span>&nbsp;vs&nbsp;<br/>&nbsp;</span>
+        <span>아재<br/>12</span>
+        </GagBoxInsideBox>
       </GagBoxInsideBoxWrapper>
     
     </GagBox>)
@@ -42,6 +49,10 @@ width: 100px;
 height: 60px;
 background-color: white;
 border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content:center;
+flex-direction: row;
 `
 
 const GagBox = styled.button<GagBoxBackColor>`
@@ -63,6 +74,11 @@ border: none;
     margin-bottom: 15px;
     text-align: start;
   line-height: 10px;
+  }
+  span{
+    font-size: 14px;
+    color: black;
+    text-align: center;
   }
 border-radius: 18px;
     width: 300px;
