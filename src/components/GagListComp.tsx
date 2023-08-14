@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
 import { gagModalState } from '../store/atom';
 import { GagBoxBackColor, GagListCompProps } from '../utils/infos/types';
-
+import Pagination from 'react-js-pagination';
 
 function GagListComp (props : GagListCompProps){
 
@@ -30,7 +30,6 @@ function GagListComp (props : GagListCompProps){
         <span>아재<br/>12</span>
         </GagBoxInsideBox>
       </GagBoxInsideBoxWrapper>
-    
     </GagBox>)
 }
 

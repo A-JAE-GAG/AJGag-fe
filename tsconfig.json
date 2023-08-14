@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "es5",
     "lib": [
-      "dom", "es5", "scripthost",
+      "dom",
+      "es5",
+      "scripthost",
       "dom.iterable",
       "esnext"
     ],
@@ -18,7 +20,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve"
   },
   "include": [
     "src"
