@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from "../infos/cookie";
 import { setLocalStorage } from "../infos/loaclStorage";
+import { GagListGet } from "../infos/types";
 import Axios from "./axios";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
@@ -39,3 +40,12 @@ export const postEmailConfirm = async (data : any)  => {
     const res = await apiClient.post(`/api/gag`, data, { headers })
     return res
   }
+  export const getGagPage = async (data: GagListGet) => {
+    const { page, size, sort } = data;
+
+    const res = axios.get(
+      `/api/gag?page=${page}&size=${size}&sort=${sort}`
+    );
+    return res;
+  };
+  

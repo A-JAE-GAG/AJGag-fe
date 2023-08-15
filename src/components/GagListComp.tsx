@@ -12,7 +12,7 @@ import Pagination from 'react-js-pagination';
 
 function GagListComp (props : GagListCompProps){
 
-    return(<GagBox readed={props.isreaded}>
+    return(<GagBox isreaded={props.isreaded}>
       <h3>
         왕이 넘어지면?
       </h3>
@@ -82,7 +82,7 @@ border: none;
 border-radius: 18px;
     width: 300px;
     height: 180px;
-  background-color: ${props => (props.readed == false ?'rgba(111, 168, 255, 1)' : 'rgba(167, 200, 250, 1)')};
+  background-color: ${props => (props.isreaded == false ?'rgba(111, 168, 255, 1)' : 'rgba(167, 200, 250, 1)')};
   padding-left: 25px;
   padding-bottom: 25px;
   `

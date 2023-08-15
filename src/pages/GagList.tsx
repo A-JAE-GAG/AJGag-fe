@@ -1,21 +1,31 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import { useForm, Controller } from 'react-hook-form';
 import GagListComp from '../components/GagListComp';
 import { FormData } from '../utils/infos/types';
 import Pagination from 'react-js-pagination';
+import { useQuery } from 'react-query';
+import { getGagPage } from '../utils/api/api';
 
 
 function GagList() {
   const { handleSubmit, control, watch } = useForm<FormData>();
   const input1Value = watch('input1', '');
   const input2Value = watch('input2', '');
+  const filterParam = useRef("all")
   const [currentPageNum, setCurrentPageNum] = useState<number>(1)
   const [standardPageNum, setStandardPageNum] = useState<number>(0)
   const [MaxPageNum, setMaxPageNum] = useState<number>(10)
 
   const [selectedOption, setSelectedOption] = useState('최신'); // Initial selection
-  
+  const { isLoading } = useQuery(["getList", { page: currentPageNum, size: 15, sort: "newest"}],
+  () => getGagPage({page : currentPageNum, size : 15, sort: "newest"}),
+{
+  onSuccess:()=>{
+    console.log("gggggg")
+  }
+}
+  )
 
   const handleButtonClick = (value: string) => {
     setSelectedOption(value);
@@ -25,7 +35,6 @@ function GagList() {
   const pageChange = (page:number) =>{
     console.log(page)
   }
-
 
   const onSubmit = (data: FormData) => {
     console.log('Form Data:', data);
@@ -59,7 +68,7 @@ function GagList() {
       </>
     </UpsideBox>
     <GagOverlay></GagOverlay>
-    <ListBox>
+    {isLoading === false ?(<ListBox>
       <GagListComp isreaded = {false} username='김호이'></GagListComp>
       <GagListComp isreaded = {false} username='김호이'></GagListComp>
       <GagListComp isreaded = {false} username='김호이'></GagListComp>
@@ -73,7 +82,9 @@ function GagList() {
       <GagListComp isreaded = {true} username='김호이'></GagListComp>
       <GagListComp isreaded = {false} username='김호이'></GagListComp>
       <GagListComp isreaded = {false} username='김호이'></GagListComp>
-    </ListBox>
+    </ListBox>)
+    :(<GagListComp isreaded = {true} username='김호이'></GagListComp>)}
+    
     <PageBox>
       <Pagination
         activePage={7}

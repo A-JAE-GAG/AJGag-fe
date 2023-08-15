@@ -17,10 +17,15 @@ export interface MainButtonProps {
 }
 
 export interface GagBoxBackColor{
-  readed : boolean;
+  isreaded : boolean;
 }
 
 export interface GagListCompProps{
   isreaded: boolean;
   username: string;
+}
+export interface GagListGet{
+  page: number;
+  size: number;
+  sort: string;
 }
