@@ -1,19 +1,23 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { loginState } from '../../store/atom';
+import { gagModalState, loginState } from '../../store/atom';
 import { getLocalStorage, removeLocalStorage } from '../../utils/infos/loaclStorage';
 import { getCookie, removeCookie } from '../../utils/infos/cookie';
+import GagModal from '../GagModal';
+import LoginModal from '../LoginModal';
 
 function Header (){
 
     const navigate = useNavigate();
     const Loginstate = useSetRecoilState(loginState)
     const nickname = getLocalStorage("username")
+    const LoginState = useRecoilValue(loginState);
+    const GagModalState = useRecoilValue(gagModalState);
 
     useEffect(()=>{
-        if(getCookie("token") == null || undefined){
+        if(getCookie("token") == null || undefined && nickname !== null){
             removeLocalStorage("username");
             console.log("로그아웃 체크")
         }
@@ -27,12 +31,15 @@ function Header (){
       };
     
 
-    return(<HeaderBox>
-<h3>ㅇㅈ개그</h3>
-{nickname !== null ? <NameBox><h5>{nickname}님 환영합니다!</h5><h5 onClick={() => onLogout()}>로그아웃</h5></NameBox>: <h4 onClick={()=> Loginstate(true)}>로그인/회원가입</h4>}
-
-
-    </HeaderBox>)
+    return(<><HeaderBox>
+      <h3>ㅇㅈ개그</h3>
+      {nickname !== null ? <NameBox><h5>{nickname}님 환영합니다!</h5><h5 onClick={() => onLogout()}>로그아웃</h5></NameBox>: <h4 onClick={()=> Loginstate(true)}>로그인/회원가입</h4>}
+      
+      
+          </HeaderBox>
+      {GagModalState === true && <GagModal/>}
+      {LoginState === true && <LoginModal />}
+    </>)
 }
 
 export default Header;

@@ -8,14 +8,9 @@ import GagModal from '../components/GagModal';
 
 
 function Main (){
-    const LoginState = useRecoilValue(loginState);
-    const GagModalState = useRecoilValue(gagModalState);
-  
       return (<>
       
       <Maincontainer>
-      {GagModalState === true && <GagModal/>}
-      {LoginState === true && <LoginModal />}
         <MainTitleContainer>
         <h1>ㅇㅈ개그</h1>
         <h2>당신의 개그는 아재? 인정?</h2>

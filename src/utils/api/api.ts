@@ -42,9 +42,12 @@ export const postEmailConfirm = async (data : any)  => {
   }
   export const getGagPage = async (data: GagListGet) => {
     const { page, size, sort } = data;
-
-    const res = axios.get(
-      `/api/gag?page=${page}&size=${size}&sort=${sort}`
+    const cookie = getCookie("token");
+    const headers = {
+      Authorization: cookie
+    };
+    const res = await apiClient.get(
+      `/api/gag?page=${page}&size=${size}&sort=${sort}`,{headers}
     );
     return res;
   };
