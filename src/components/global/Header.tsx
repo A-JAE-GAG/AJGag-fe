@@ -19,7 +19,6 @@ function Header (){
     useEffect(()=>{
         if(getCookie("token") == null || undefined && nickname !== null){
             removeLocalStorage("username");
-            console.log("로그아웃 체크")
         }
         
     }, [getCookie("token")])
