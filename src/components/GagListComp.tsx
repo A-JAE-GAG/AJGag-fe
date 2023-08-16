@@ -12,22 +12,17 @@ import Pagination from 'react-js-pagination';
 
 function GagListComp (props : GagListCompProps){
 
-    return(<GagBox isreaded={props.isreaded}>
-      <h3>
-        왕이 넘어지면?
-      </h3>
-      <h4>
-        썰렁 아재
-      </h4>
+    return(<GagBox solved={props.solved}>
+      <h3>{props.title}</h3>
+      <h4>{props.author}</h4>
       <GagBoxInsideBoxWrapper>
       <GagBoxInsideBox>
-        <span>정답률<br/>52%</span>
-        <span></span>
+        <span>정답률<br/>{props.answerRate !== null ? props.answerRate+ "%" : '-'}</span>
       </GagBoxInsideBox>
       <GagBoxInsideBox>
-        <span>인정<br/>15</span>
+        <span>인정<br/>{props.agree}</span>
         <span>&nbsp;vs&nbsp;<br/>&nbsp;</span>
-        <span>아재<br/>12</span>
+        <span>아재<br/>{props.ajae}</span>
         </GagBoxInsideBox>
       </GagBoxInsideBoxWrapper>
     </GagBox>)
@@ -82,7 +77,7 @@ border: none;
 border-radius: 18px;
     width: 300px;
     height: 180px;
-  background-color: ${props => (props.isreaded == false ?'rgba(111, 168, 255, 1)' : 'rgba(167, 200, 250, 1)')};
+  background-color: ${props => (props.solved == false ?'rgba(111, 168, 255, 1)' : 'rgba(167, 200, 250, 1)')};
   padding-left: 25px;
   padding-bottom: 25px;
   `

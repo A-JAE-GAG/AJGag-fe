@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import { useForm, Controller } from 'react-hook-form';
 import GagListComp from '../components/GagListComp';
-import { FormData } from '../utils/infos/types';
+import { FormData, GagListCompProps } from '../utils/infos/types';
 import Pagination from 'react-js-pagination';
 import { useQuery } from 'react-query';
 import { getGagPage } from '../utils/api/api';
@@ -15,14 +15,17 @@ function GagList() {
   const filterParam = useRef("all")
   const [currentPageNum, setCurrentPageNum] = useState<number>(1)
   const [standardPageNum, setStandardPageNum] = useState<number>(0)
-  const [MaxPageNum, setMaxPageNum] = useState<number>(10)
+  const [totalNum, setTotalNum] = useState<number>(1)
+  const [contentlist, setContentlist] = useState<GagListCompProps[]>([])
 
-  const [selectedOption, setSelectedOption] = useState('최신'); // Initial selection
-  const { isLoading } = useQuery(["getList", { page: currentPageNum, size: 15, sort: "newest"}],
-  () => getGagPage({page : currentPageNum, size : 15, sort: "newest"}),
+  const [selectedOption, setSelectedOption] = useState('newest'); // Initial selection
+  const { isLoading } = useQuery(["getList", { page: currentPageNum, size: 15, sort: selectedOption}],
+  () => getGagPage({page : currentPageNum, size : 15, sort: selectedOption}),
 {
-  onSuccess:()=>{
-    console.log("gggggg")
+  onSuccess:({ data })=>{
+    console.log(data.data.content)
+    setTotalNum(data.data.totalPages)
+    setContentlist(data.data.content)
   }
 }
   )
@@ -40,27 +43,29 @@ function GagList() {
     console.log('Form Data:', data);
   };
 
+  console.log(contentlist)
+
   return (<BackgroundBox>
     <UpsideBox>
       <>
         <div>
           <RadioButton
-            onClick={() => handleButtonClick('최신')}
-            style={{ fontWeight: selectedOption === '최신' ? 'bold' : 'normal' }}
+            onClick={() => handleButtonClick('newest')}
+            style={{ fontWeight: selectedOption === 'newest' ? 'bold' : 'normal' }}
           >
             최신개그
           </RadioButton>
           <span>|</span>
           <RadioButton
-            onClick={() => handleButtonClick('주간')}
-            style={{ fontWeight: selectedOption === '주간' ? 'bold' : 'normal' }}
+            onClick={() => handleButtonClick('weekly')}
+            style={{ fontWeight: selectedOption === 'weekly' ? 'bold' : 'normal' }}
           >
             주간개그
           </RadioButton>
           <span>|</span>
           <RadioButton
-            onClick={() => handleButtonClick('인기')}
-            style={{ fontWeight: selectedOption === '인기' ? 'bold' : 'normal' }}
+            onClick={() => handleButtonClick('alltime')}
+            style={{ fontWeight: selectedOption === 'alltime' ? 'bold' : 'normal' }}
           >
             인기개그
           </RadioButton>
@@ -69,31 +74,22 @@ function GagList() {
     </UpsideBox>
     <GagOverlay></GagOverlay>
     {isLoading === false ?(<ListBox>
-      <GagListComp isreaded = {false} username='김호이'></GagListComp>
-      <GagListComp isreaded = {false} username='김호이'></GagListComp>
-      <GagListComp isreaded = {false} username='김호이'></GagListComp>
-      <GagListComp isreaded = {false} username='김호이'></GagListComp>
-      <GagListComp isreaded = {true} username='김호이'></GagListComp>
-      <GagListComp isreaded = {true} username='김호이'></GagListComp>
-      <GagListComp isreaded = {true} username='김호이'></GagListComp>
-      <GagListComp isreaded = {true} username='김호이'></GagListComp>
-      <GagListComp isreaded = {true} username='김호이'></GagListComp>
-      <GagListComp isreaded = {true} username='김호이'></GagListComp>
-      <GagListComp isreaded = {true} username='김호이'></GagListComp>
-      <GagListComp isreaded = {false} username='김호이'></GagListComp>
-      <GagListComp isreaded = {false} username='김호이'></GagListComp>
+      {(contentlist)?.map((item)=>{ 
+        console.log(item)
+        return(<GagListComp solved = {item.solved} title = {item.title} author={item.author} answerRate={item.answerRate} agree={item.agree} ajae={item.ajae} gagId={0} ></GagListComp>)})
+      }
     </ListBox>)
-    :(<GagListComp isreaded = {true} username='김호이'></GagListComp>)}
+    :(<GagListComp solved = {false} author='김호이' answerRate={null} agree={0} ajae={0} gagId={0} title=''></GagListComp>)}
     
     <PageBox>
       <Pagination
-        activePage={7}
+        activePage={currentPageNum}
         itemsCountPerPage={15}
-        totalItemsCount={200}
+        totalItemsCount={totalNum}
         pageRangeDisplayed={5}
         prevPageText={"‹"}
         nextPageText={"›"}
-        onChange={pageChange}/>
+        onChange={(page) => setCurrentPageNum(page)}/>
     </PageBox>
   </BackgroundBox>
   );

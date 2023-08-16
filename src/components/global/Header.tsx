@@ -22,7 +22,7 @@ function Header (){
             console.log("로그아웃 체크")
         }
         
-    })
+    }, [getCookie("token")])
     const onLogout = () => {
         removeCookie("token");
         removeLocalStorage("username");

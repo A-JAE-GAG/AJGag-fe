@@ -17,12 +17,17 @@ export interface MainButtonProps {
 }
 
 export interface GagBoxBackColor{
-  isreaded : boolean;
+  solved : boolean;
 }
 
 export interface GagListCompProps{
-  isreaded: boolean;
-  username: string;
+  solved: boolean;
+  author: string;
+  answerRate:number | null;
+  agree:number;
+  ajae:number;
+  gagId:number;
+  title:string;
 }
 export interface GagListGet{
   page: number;
