@@ -9,10 +9,12 @@ import { getLocalStorage } from '../utils/infos/loaclStorage';
 import { gagModalState } from '../store/atom';
 import { GagBoxBackColor, GagListCompProps } from '../utils/infos/types';
 import Pagination from 'react-js-pagination';
+import { useNavigate } from 'react-router';
 
 function GagListComp (props : GagListCompProps){
+  const navigate = useNavigate()
 
-    return(<GagBox solved={props.solved}>
+    return(<GagBox solved={props.solved} onClick={()=> {navigate(`/GagDetail/${props.gagId}`)}}>
       <h3>{props.title}</h3>
       <h4>{props.author}</h4>
       <GagBoxInsideBoxWrapper>
