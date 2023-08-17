@@ -7,6 +7,7 @@ import Pagination from 'react-js-pagination';
 import { useQuery } from 'react-query';
 import { getGagPage } from '../utils/api/api';
 import { getCookie } from '../utils/infos/cookie';
+import { getLocalStorage } from '../utils/infos/loaclStorage';
 
 
 function GagList() {
@@ -15,7 +16,7 @@ function GagList() {
   const [standardPageNum, setStandardPageNum] = useState<number>(0)
   const [totalNum, setTotalNum] = useState<number>(1)
   const [contentlist, setContentlist] = useState<GagListCompProps[]>([])
-  const [solvedlist, setSolvedlist] = useState<number[]>()
+  const [solvedlist, setSolvedlist] = useState<number[]>([])
 
   const [selectedOption, setSelectedOption] = useState('newest'); // Initial selection
   const { isLoading } = useQuery(["getList", { page: currentPageNum, size: 15, sort: selectedOption}],
@@ -29,11 +30,18 @@ function GagList() {
     if(getCookie("token") == null || undefined){
       setTotalNum(data.data.totalPages)
       setContentlist(data.data.content)
+      console.log(getLocalStorage("solvedList"))
+      const savedSolvedList = getLocalStorage("solvedList");
+
+      if (savedSolvedList !== null) {
+        setSolvedlist(savedSolvedList.split(',').map(Number));
+      }
     }
     //회원이라면
     else{
       setTotalNum(data.data.gagResponseDtoPage.totalPages)
       setContentlist(data.data.gagResponseDtoPage.content)
+      setSolvedlist(data.data.visitedGags)
     }
   }
 }
@@ -84,7 +92,7 @@ function GagList() {
     <GagOverlay></GagOverlay>
     {isLoading === false ?(<ListBox>
       {(contentlist)?.map((item)=>{ 
-        return(<GagListComp solved = {getCookie("token") == null || undefined ? false : true} title = {item.title} author={item.author} answerRate={item.answerRate} agree={item.agree} ajae={item.ajae} gagId={item.gagId} ></GagListComp>)})
+        return(<GagListComp solved = {solvedlist.includes(item.gagId) ? true : false} title = {item.title} author={item.author} answerRate={item.answerRate} agree={item.agree} ajae={item.ajae} gagId={item.gagId} ></GagListComp>)})
       }
     </ListBox>)
     :(<GagListComp solved = {false} author='김호이' answerRate={null} agree={0} ajae={0} gagId={0} title=''></GagListComp>)}

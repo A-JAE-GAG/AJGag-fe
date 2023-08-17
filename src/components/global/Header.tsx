@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import { gagModalState, loginState } from '../../store/atom';
-import { getLocalStorage, removeLocalStorage } from '../../utils/infos/loaclStorage';
+import { getLocalStorage, removeLocalStorage, setLocalStorage } from '../../utils/infos/loaclStorage';
 import { getCookie, removeCookie } from '../../utils/infos/cookie';
 import GagModal from '../GagModal';
 import LoginModal from '../LoginModal';
@@ -19,6 +19,9 @@ function Header (){
     useEffect(()=>{
         if(getCookie("token") == null || undefined && nickname !== null){
             removeLocalStorage("username");
+        }
+        if(getLocalStorage("solvedList") == null || undefined){
+          setLocalStorage("solvedList", [])
         }
         
     }, [getCookie("token")])

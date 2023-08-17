@@ -13,7 +13,7 @@ const Router = () =>{
         <Routes>
             <Route element = {<Main />} path = "/" />
             <Route element = {<GagList />} path = "/GagList" />
-            <Route element = {<GagDetail />} path = "/GagDetail" />
+            <Route element = {<GagDetail />} path = "/GagDetail/:id" />
             <Route element = {<Profile />} path = "/Profile" />
         </Routes>
         </BrowserRouter>

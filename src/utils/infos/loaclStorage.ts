@@ -1,5 +1,5 @@
-export const setLocalStorage = (key :string, value :string) => {
-    return localStorage.setItem(key, value);
+export const setLocalStorage = (key :string, value :any) => {
+    return localStorage.setItem(key, value) as any;
   };
   
   export const getLocalStorage = (key :string) => {
@@ -7,6 +7,6 @@ export const setLocalStorage = (key :string, value :string) => {
   };
   
   export const removeLocalStorage = (key:string) => {
-    return localStorage.removeItem(key);
+    return localStorage.removeItem(key) as any;
   };
   
