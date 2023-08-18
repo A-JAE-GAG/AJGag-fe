@@ -2,24 +2,82 @@ import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import { useForm, Controller } from 'react-hook-form';
 import GagListComp from '../components/GagListComp';
-import { FormData, GagListCompProps } from '../utils/infos/types';
+import { FormData, GagDetailContent, GagListCompProps } from '../utils/infos/types';
 import Pagination from 'react-js-pagination';
 import { useQuery } from 'react-query';
-import { getGagPage } from '../utils/api/api';
+import { getGagDetailPage } from '../utils/api/api';
 import { getCookie } from '../utils/infos/cookie';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 
 function GagDetail (){
-
+    const pam = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const detailId = searchParams.get("id");
+    const [gagData, setGagData] = useState<GagDetailContent>()
+    const { isLoading } = useQuery(["getList", { Id: pam.id}],
+    () => getGagDetailPage({Id : detailId}),
+  {
+    onSuccess:({ data })=>{
+      console.log(data.data.content)
+      console.log(data.data)
+      console.log(data)
+      setGagData(data.data)
+    }
+  }
+    )
    
-      return (<BackgroundBox><GagBackGound></GagBackGound></BackgroundBox>);
+    console.log(gagData?.title)
+      return (<BackgroundBox>
+        <GagBackGround>
+            <GagNameBox>
+            <h3>{gagData?.title}</h3>
+            </GagNameBox>
+            <GagContentBox>
+            <h4>{gagData?.content}</h4>
+            </GagContentBox>
+            <InputWrapper>
+            </InputWrapper>
+            <InputStyle>
+            </InputStyle>
+            </GagBackGround>
+            </BackgroundBox>);
   }
   
   
   
   
   export default GagDetail;
+
+  const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Prefix = styled.span`
+  margin-right: 8px;
+`;
+
+  const InputStyle = styled.input`
+  margin-top: 15px;
+  width: 650px;
+  height: 50px;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  `
+
+  const GagNameBox = styled.div`
+  width: 800px;
+  height: 100px;
+  `
+  const GagContentBox = styled.div`
+  width: 800px;
+  height: 300px;
+  `
 
   const BackgroundBox = styled.div`
   width: 100vw;
@@ -29,24 +87,24 @@ function GagDetail (){
   justify-content: center;
   flex-direction: column;
   `
-  const GagBackGound = styled.div`
+  const GagBackGround = styled.div`
 border: none;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  padding-top : 35px;
   h3{
-    font-size: 18px;
+    font-size: 29px;
     color: white;
     margin-bottom: 6px;
-    text-align: start;
+    text-align: center;
   }
   h4{
-    font-size: 14px;
+    font-size: 24px;
     color: white;
     margin-bottom: 15px;
     text-align: start;
-  line-height: 10px;
   }
   span{
     font-size: 14px;
@@ -54,8 +112,8 @@ border: none;
     text-align: center;
   }
 border-radius: 18px;
-    width: 700px;
-    height: 500px;
+    width: 900px;
+    height: 600px;
   background-color: rgba(111, 168, 255, 1);
   padding-left: 25px;
   padding-bottom: 25px;

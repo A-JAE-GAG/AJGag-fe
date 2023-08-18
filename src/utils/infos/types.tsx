@@ -20,6 +20,14 @@ export interface GagBoxBackColor{
   solved : boolean;
 }
 
+export interface GagDetailContent{
+  title:string;
+  content:string;
+  gagId:string;
+  nextGagId:string;
+  prevGagId:string;
+}
+
 export interface GagListCompProps{
   solved: boolean;
   author: string;
@@ -28,6 +36,9 @@ export interface GagListCompProps{
   ajae:number;
   gagId:number;
   title:string;
+}
+export interface GagDetailPage{
+  Id:string| null;
 }
 export interface GagListGet{
   page: number;

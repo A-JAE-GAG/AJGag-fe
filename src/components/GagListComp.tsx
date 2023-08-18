@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router';
 function GagListComp (props : GagListCompProps){
   const navigate = useNavigate()
 
-    return(<GagBox solved={props.solved} onClick={()=> {navigate(`/GagDetail/${props.gagId}`)}}>
+    return(<GagBox solved={props.solved} onClick={()=> {navigate(`/GagDetail/?id=${props.gagId}`)}}>
       <h3>{props.title}</h3>
       <h4>{props.author}</h4>
       <GagBoxInsideBoxWrapper>
