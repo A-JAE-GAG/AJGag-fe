@@ -1,46 +1,65 @@
 import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
-import { useForm, Controller } from 'react-hook-form';
 import GagListComp from '../components/GagListComp';
 import { FormData, GagDetailContent, GagListCompProps } from '../utils/infos/types';
 import Pagination from 'react-js-pagination';
-import { useQuery } from 'react-query';
-import { getGagDetailPage } from '../utils/api/api';
+import { useMutation, useQuery } from 'react-query';
+import { getGagDetailPage, postGagAnswer } from '../utils/api/api';
 import { getCookie } from '../utils/infos/cookie';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { useForm, Controller } from 'react-hook-form';
 
 
 function GagDetail (){
     const pam = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
+    const { register, handleSubmit, control, watch, formState } = useForm();
     const detailId = searchParams.get("id");
     const [gagData, setGagData] = useState<GagDetailContent>()
     const { isLoading } = useQuery(["getList", { Id: pam.id}],
     () => getGagDetailPage({Id : detailId}),
   {
     onSuccess:({ data })=>{
-      console.log(data.data.content)
-      console.log(data.data)
-      console.log(data)
       setGagData(data.data)
     }
   }
     )
+
+
+    const GagupMutation = useMutation<any>(postGagAnswer,{
+        onSuccess: ({ data }) => {
+          console.log("업로드 성공")
+        },
+        onError: (error) => {
+          console.log("업로드 실패")
+        },
+      });
+    
+
+    const postAnswer =async (data:any) => {
+        console.log(data)
+        const res = await GagupMutation.mutateAsync(data)
+    }
    
-    console.log(gagData?.title)
       return (<BackgroundBox>
-        <GagBackGround>
+        <GagBackGround onSubmit={handleSubmit(postAnswer)}>
             <GagNameBox>
             <h3>{gagData?.title}</h3>
             </GagNameBox>
             <GagContentBox>
             <h4>{gagData?.content}</h4>
             </GagContentBox>
-            <InputWrapper>
-            </InputWrapper>
-            <InputStyle>
-            </InputStyle>
+            <Controller
+                name = "answer"
+                control={control}
+                defaultValue=""
+                render={() =>(
+                    <InputStyle
+                    {...register("answer", {
+                      required: "정답을 입력하세요."
+                    })} />)}
+            />
             </GagBackGround>
             </BackgroundBox>);
   }
@@ -49,6 +68,10 @@ function GagDetail (){
   
   
   export default GagDetail;
+
+  const GagAnswerForm = styled.div`
+    
+  `
 
   const InputWrapper = styled.div`
   display: flex;
@@ -87,7 +110,7 @@ const Prefix = styled.span`
   justify-content: center;
   flex-direction: column;
   `
-  const GagBackGround = styled.div`
+  const GagBackGround = styled.form`
 border: none;
   display: flex;
   align-items: center;

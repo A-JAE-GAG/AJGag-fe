@@ -31,8 +31,22 @@ export const postEmailConfirm = async (data : any)  => {
     console.log(res)
     return res
   }
+  
+  export const postGagAnswer = async (data :any) =>{
+    const cookie = getCookie("token");
+    const headers = {
+      Authorization: cookie
+    };
+    console.log(data)
+    //const res = await apiClient.post(`/api/gag${Id}`, data, { headers })
+    const res = "asdasasdas"
+    return res
+  }
+
+  //개그 타입 만들 필요
   export const postGag = async (data :any) =>{
     const cookie = getCookie("token");
+    const { Id } = data;
     const headers = {
       Authorization: cookie
     };
@@ -40,6 +54,7 @@ export const postEmailConfirm = async (data : any)  => {
     const res = await apiClient.post(`/api/gag`, data, { headers })
     return res
   }
+
   export const getGagPage = async (data: GagListGet) => {
     const { page, size, sort } = data;
     const cookie = getCookie("token");
