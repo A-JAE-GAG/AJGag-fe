@@ -65,7 +65,7 @@ export const postEmailConfirm = async (data : any)  => {
       `/api/gag?page=${page}&size=${size}&sort=${sort}`,{headers}
     );
     return res;
-  };
+  }; 
   
   export const getGagDetailPage = async (data: GagDetailPage) => {
     const { Id } = data;
