@@ -1,6 +1,11 @@
 import { type } from "os";
 import React from "react";
 
+export interface GagAnswer {
+  id: number;
+  answer: string;
+}
+
 export interface ButtonProps {
   width?: string;
   height?: string;

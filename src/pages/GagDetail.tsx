@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 import GagListComp from '../components/GagListComp';
-import { FormData, GagDetailContent, GagListCompProps } from '../utils/infos/types';
+import { FormData, GagAnswer, GagDetailContent, GagListCompProps } from '../utils/infos/types';
 import Pagination from 'react-js-pagination';
 import { useMutation, useQuery } from 'react-query';
 import { getGagDetailPage, postGagAnswer } from '../utils/api/api';
@@ -9,7 +9,8 @@ import { getCookie } from '../utils/infos/cookie';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-
+import checkmark from "../assets/checkmark.svg"
+import cancel from "../assets/cancel.svg"
 
 function GagDetail (){
     const pam = useParams();
@@ -17,6 +18,9 @@ function GagDetail (){
     const { register, handleSubmit, control, watch, formState } = useForm();
     const detailId = searchParams.get("id");
     const [gagData, setGagData] = useState<GagDetailContent>()
+    const [animationPaused, setAnimationPaused] = useState(false);
+    const [timeOut, setTimeOut] = useState(false);
+    const [answerEnd, setAnswerEnd] = useState(false);
     const { isLoading } = useQuery(["getList", { Id: pam.id}],
     () => getGagDetailPage({Id : detailId}),
   {
@@ -25,11 +29,34 @@ function GagDetail (){
     }
   }
     )
-
+  useEffect(( )=>{
+    setTimeout(() => {
+      if(animationPaused == false){
+        setTimeOut(true);
+        console.log("시간아웃")
+        postAnswer({answer : "timeout"})
+      }
+    }, 3500);
+  },[])
 
     const GagupMutation = useMutation<any>(postGagAnswer,{
-        onSuccess: ({ data }) => {
-          console.log("업로드 성공")
+        onSuccess: (responseData) => {
+          console.log(responseData.data.data.answer)
+          if(responseData.data.data.answer == "오답입니다." && timeOut == false && answerEnd === false){
+            setAnswerEnd(true);
+            setTimeout(() => {
+              setAnswerEnd(false);
+            }, 1300);
+          }
+          else if(timeOut == false){
+            window.alert("정답입니다.")
+            setAnimationPaused(true)
+            setAnswerEnd(true)
+          }
+          else if(timeOut == true){
+            window.alert("시간 초과.")
+            setAnswerEnd(true)
+          }
         },
         onError: (error) => {
           console.log("업로드 실패")
@@ -37,10 +64,15 @@ function GagDetail (){
       });
     
 
-    const postAnswer =async (data:any) => {
-        console.log(data)
-        const res = await GagupMutation.mutateAsync(data)
-    }
+      const postAnswer = async (data: any) => {
+        const payload: any = {
+          id: detailId,
+          answer: data.answer,
+        };
+        if(answerEnd != true){
+          const res = await GagupMutation.mutateAsync(payload);
+        }
+      };
    
       return (<BackgroundBox>
         <GagBackGround onSubmit={handleSubmit(postAnswer)}>
@@ -50,6 +82,9 @@ function GagDetail (){
             <GagContentBox>
             <h4>{gagData?.content}</h4>
             </GagContentBox>
+            <GageBackGround>
+                <GageFront paused={animationPaused} />
+            </GageBackGround>
             <Controller
                 name = "answer"
                 control={control}
@@ -61,16 +96,47 @@ function GagDetail (){
                     })} />)}
             />
             </GagBackGround>
+            {(animationPaused && answerEnd && timeOut) && <CheckMark src={checkmark} />}
+            {(!animationPaused && answerEnd) && <CheckMark src={cancel} />}
             </BackgroundBox>);
   }
   
-  
-  
-  
   export default GagDetail;
+
+  const blinkingAnimation = keyframes`
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+`;
+  const CheckMark = styled.img`
+    position: fixed;
+    width: 800px;
+    height: 800px;
+  animation: ${blinkingAnimation} 2s ease-in-out 0.4s infinite;
+  `
 
   const GagAnswerForm = styled.div`
     
+  `
+
+  const decreaseAnimation = keyframes`
+    from {width: 650px;} to {width: 25px;}
+  `;
+
+  const GageFront = styled.div<{ paused: boolean }>`
+  background-color: #0be90b;
+  border-radius: 35px;
+  width: 650px;
+  height: 25px;
+  animation: ${decreaseAnimation} 3.5s linear forwards;
+  animation-play-state: ${props => (props.paused ? 'paused' : 'running')};
+  `
+
+  const GageBackGround = styled.div`
+  background-color: white;
+  border-radius: 35px;
+  width: 650px;
+  height: 25px;
   `
 
   const InputWrapper = styled.div`
@@ -83,7 +149,7 @@ const Prefix = styled.span`
 `;
 
   const InputStyle = styled.input`
-  margin-top: 15px;
+  margin-top: 25px;
   width: 650px;
   height: 50px;
   background-color: white;
