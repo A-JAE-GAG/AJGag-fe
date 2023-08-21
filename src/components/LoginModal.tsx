@@ -8,6 +8,7 @@ import { AxiosError } from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
 import { ButtonProps } from '../utils/infos/types';
+import { type } from 'os';
 
 function LoginModal() {
 
@@ -148,9 +149,12 @@ function LoginModal() {
         name="password"
         control={control}
         defaultValue=""
+        
         render={({ field }) => (
           <InputBox>
           <InputStyle
+          type={isLogin ? "password" : "text"}
+          
           {...register("password",{
             required:"비밀번호를 입력하세요.",
             pattern: {
