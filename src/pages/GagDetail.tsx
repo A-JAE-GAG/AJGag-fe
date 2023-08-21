@@ -11,6 +11,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import checkmark from "../assets/checkmark.svg"
 import cancel from "../assets/cancel.svg"
+import { timeout } from 'q';
 
 function GagDetail (){
     const pam = useParams();
@@ -31,7 +32,7 @@ function GagDetail (){
     )
   useEffect(( )=>{
     setTimeout(() => {
-      if(animationPaused == false){
+      if(animationPaused == false && answerEnd == false){
         setTimeOut(true);
         console.log("시간아웃")
         postAnswer({answer : "timeout"})
@@ -42,7 +43,7 @@ function GagDetail (){
     const GagupMutation = useMutation<any>(postGagAnswer,{
         onSuccess: (responseData) => {
           console.log(responseData.data.data.answer)
-          if(responseData.data.data.answer == "오답입니다." && timeOut == false && answerEnd === false){
+          if(responseData.data.data.answer == "오답입니다." && animationPaused ==false && timeOut == false && answerEnd === false){
             setAnswerEnd(true);
             setTimeout(() => {
               setAnswerEnd(false);
@@ -96,8 +97,8 @@ function GagDetail (){
                     })} />)}
             />
             </GagBackGround>
-            {(animationPaused && answerEnd && timeOut) && <CheckMark src={checkmark} />}
-            {(!animationPaused && answerEnd) && <CheckMark src={cancel} />}
+            {(animationPaused && answerEnd && timeOut == false) && <CheckMark src={checkmark} />}
+            {(!animationPaused && timeOut) && <CheckMark src={cancel} />}
             </BackgroundBox>);
   }
   
