@@ -32,7 +32,8 @@ function GagDetail (){
     )
   useEffect(( )=>{
     setTimeout(() => {
-      if(animationPaused == false && answerEnd == false){
+      if(timeOut == false){
+        console.log(timeOut)
         setTimeOut(true);
         console.log("시간아웃")
         postAnswer({answer : "timeout"})
@@ -43,7 +44,11 @@ function GagDetail (){
     const GagupMutation = useMutation<any>(postGagAnswer,{
         onSuccess: (responseData) => {
           console.log(responseData.data.data.answer)
-          if(responseData.data.data.answer == "오답입니다." && animationPaused ==false && timeOut == false && answerEnd === false){
+          if(timeOut == true){
+            window.alert("시간 초과.")
+            setAnswerEnd(true)
+          }
+          else if(responseData.data.data.answer == "오답입니다." && timeOut == false){
             setAnswerEnd(true);
             setTimeout(() => {
               setAnswerEnd(false);
@@ -52,10 +57,7 @@ function GagDetail (){
           else if(timeOut == false){
             window.alert("정답입니다.")
             setAnimationPaused(true)
-            setAnswerEnd(true)
-          }
-          else if(timeOut == true){
-            window.alert("시간 초과.")
+            setTimeOut(true)
             setAnswerEnd(true)
           }
         },
@@ -97,8 +99,8 @@ function GagDetail (){
                     })} />)}
             />
             </GagBackGround>
-            {(animationPaused && answerEnd && timeOut == false) && <CheckMark src={checkmark} />}
-            {(!animationPaused && timeOut) && <CheckMark src={cancel} />}
+            {(animationPaused && answerEnd && timeOut) && <CheckMark src={checkmark} />}
+            {(animationPaused == false && answerEnd) && <CheckMark src={cancel} />}
             </BackgroundBox>);
   }
   
