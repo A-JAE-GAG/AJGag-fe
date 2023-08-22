@@ -29,8 +29,8 @@ export interface GagDetailContent{
   title:string;
   content:string;
   gagId:string;
-  nextGagId:string;
-  prevGagId:string;
+  nextGagId:number | null;
+  prevGagId:number | null;
 }
 
 export interface GagListCompProps{

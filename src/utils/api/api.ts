@@ -23,6 +23,24 @@ export const postEmailConfirm = async (data : any)  => {
     return res;
   };
 
+  export const postInjungAjae = async (data :any) =>{
+    console.log(data)
+    const cookie = getCookie("token");
+    const headers = {
+      Authorization: cookie
+    };
+    var res;
+    //아재(비추)라면
+    if(data.isAjae == true){
+     res = await apiClient.post(`/api/gag/${data.id}/ajae`, data, { headers })
+    }
+    else{
+      res = await apiClient.post(`/api/gag/${data.id}/agree`, data, { headers })
+    }
+    console.log(res)
+    return res
+  }
+  
   export const postSignIn = async (data :any) =>{
     console.log(data)
     const res = await apiClient.post(`/api/users/login`, data)
@@ -41,8 +59,15 @@ export const postEmailConfirm = async (data : any)  => {
     console.log(data.answer)
     const gaganswer = {answer : data.answer}
     const res = await apiClient.post(`/api/gag/${data.id}`, gaganswer, { headers })
+    
     //const res = "asdasasdas"
-    return res
+    if(data.answer == "timeout"){
+      const timeout: any = {data: {data: {answer: "timeout", realAnswer : res.data.data.answer, agree : res.data.data.agree, ajae:res.data.data.ajae}}};
+      return timeout
+    }
+    else{
+      return res
+    }
   }
 
   //개그 타입 만들 필요
