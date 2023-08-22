@@ -34,7 +34,7 @@ function Header (){
     
 
     return(<><HeaderBox>
-      <h3>ㅇㅈ개그</h3>
+      <h3 onClick={() => {navigate("/");}}>ㅇㅈ개그</h3>
       {nickname !== null ? <NameBox><h5>{nickname}님 환영합니다!</h5><h5 onClick={() => onLogout()}>로그아웃</h5></NameBox>: <h4 onClick={()=> Loginstate(true)}>로그인/회원가입</h4>}
       
       
@@ -63,6 +63,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 h3{
+  cursor : pointer;
   margin: 0px;
   padding: 0px 0px 0px 10px;
   font-size: 35px;
