@@ -10,6 +10,10 @@ const apiClient = axios.create({
   withCredentials: true,
 })
 
+export const getMainGag =async (data: any) => {
+  const res = await apiClient.get("/api/gag/mainpage") 
+  return res;
+}
 
 export const postEmailConfirm = async (data : any)  => {
     console.log(data)
@@ -82,6 +86,19 @@ export const postEmailConfirm = async (data : any)  => {
     return res
   }
 
+  export const getMyGagPage = async (data: GagListGet) => {
+    const { page, size } = data;
+    const cookie = getCookie("token");
+    const headers = {
+      Authorization: cookie
+    };
+    const res = await apiClient.get(
+      `/api/gag/mypage?page=${page}&size=${size}`,{headers}
+    );
+    console.log(res)
+    return res;
+  }; 
+  
   export const getGagPage = async (data: GagListGet) => {
     const { page, size, sort } = data;
     const cookie = getCookie("token");
@@ -93,6 +110,18 @@ export const postEmailConfirm = async (data : any)  => {
     );
     return res;
   }; 
+
+  export const deleteMyGag =async (data :any) => {
+    const { Id } = data;
+    const cookie = getCookie("token");
+    const headers = {
+      Authorization: cookie
+    };
+    const res = await apiClient.delete(
+      `/api/gag/mypage/${Id}`,{headers}
+    );
+    return res;
+  }
   
   export const getGagDetailPage = async (data: GagDetailPage) => {
     const { Id } = data;

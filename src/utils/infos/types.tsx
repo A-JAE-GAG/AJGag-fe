@@ -48,5 +48,5 @@ export interface GagDetailPage{
 export interface GagListGet{
   page: number;
   size: number;
-  sort: string;
+  sort?: string;
 }
