@@ -39,9 +39,9 @@ class Axios {
       Authorization: cookie || "",
       ...option?.headers,
     };
-    console.log(this.instance)
-    console.log(url)
-    console.log(data)
+    //console.log(this.instance)
+    //console.log(url)
+    //console.log(data)
     const response = await this.instance.post<T>(url, data, { headers });
     return response.data;
   }

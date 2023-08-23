@@ -18,12 +18,12 @@ function LoginModal() {
   const [isLogin, setisLogin] = useState<boolean>(true)
 
   const onMailUp = async (data :any) =>{
-    console.log(watch('mailcode'))
+    //console.log(watch('mailcode'))
     const mailup = await MailUpMutation.mutateAsync(watch().mailcode)
   }
 
   const onSignin =  async (data: any) =>{
-    console.log(data);
+    //console.log(data);
     const datalist = {
       username : data.mail,
       password: data.password,
@@ -32,7 +32,7 @@ function LoginModal() {
   }
 
   const onSignup =  async (data: any) =>{
-    console.log(data);
+   // console.log(data);
     const datalist = {
       username : data.mail,
       password: data.password,
@@ -45,7 +45,7 @@ function LoginModal() {
 
   const SignInMutation = useMutation<any>(postSignIn,{
     onSuccess: ({ data }) => {
-      console.log("로그인 성공")
+      //console.log("로그인 성공")
       window.location.reload()
     },
     onError: (error) => {
@@ -54,7 +54,7 @@ function LoginModal() {
   });
   const SignUpMutation = useMutation<any>(postSignUp,{
     onSuccess: ({ data }) => {
-      console.log("가입 성공")
+      //console.log("가입 성공")
     },
     onError: (error) => {
       console.log("가입 실패")
@@ -63,7 +63,7 @@ function LoginModal() {
 
   const MailUpMutation = useMutation<any>(postEmailConfirm,{
     onSuccess: ({ data }) => {
-      console.log("전송 성공")
+      //console.log("전송 성공")
     },
     onError: (error) => {
       console.log("전송 실패")
@@ -138,7 +138,7 @@ function LoginModal() {
       />
         </InputTextBox>
         <ButtonBox>
-        {isLogin === false && <ButtonStyled onClick={onMailUp}>인증하기</ButtonStyled>}
+        {/*isLogin === false && <ButtonStyled onClick={onMailUp}>인증하기</ButtonStyled>*/}
 
         </ButtonBox>
         </InputWrapper>

@@ -24,9 +24,9 @@ function Profile (){
     () => getMyGagPage({page : currentPageNum, size : 15, }),
   {
     onSuccess:({ data })=>{
-      console.log(data.data.content)
-      console.log(data.data)
-      console.log(data)
+      //console.log(data.data.content)
+     // console.log(data.data)
+      //console.log(data)
     setTotalNum(data.data.totalPages)
         setContentlist(data.data.content)
         setSolvedlist(data.data.visitedGags)

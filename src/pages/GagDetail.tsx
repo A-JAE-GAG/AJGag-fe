@@ -47,7 +47,7 @@ function GagDetail() {
     else{
       postInjungOrAjae(true)
     }
-    console.log(value); // Log the selected value to the console
+    //console.log(value); // Log the selected value to the console
   };
 
   const InjungAjaeMutation = useMutation<any> (postInjungAjae,{
@@ -61,7 +61,7 @@ function GagDetail() {
 
   const GagupMutation = useMutation<any>(postGagAnswer, {
     onSuccess: (responseData) => {
-      console.log(responseData.data.data.answer)
+      //console.log(responseData.data.data.answer)
       if (responseData.data.data.answer == "timeout") {
         isAnswerSubmitted.current = true;
         if(responseData.data.data.agree == true){
@@ -100,10 +100,10 @@ function GagDetail() {
 
   useEffect(() => {
     const timeOutReturn = setTimeout(() => {
-      console.log(timeOut)
+      //console.log(timeOut)
       if (timeOut.current == false) {
         timeOut.current = true;
-        console.log("시간아웃")
+        //console.log("시간아웃")
         postAnswer({ answer: "timeout" })
       }
     }, 15000);

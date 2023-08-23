@@ -19,7 +19,7 @@ function GagModal() {
 
   const GagupMutation = useMutation<any>(postGag,{
     onSuccess: ({ data }) => {
-      console.log("업로드 성공")
+      //console.log("업로드 성공")
       navigate('/')
       window.location.reload()
     },
@@ -29,7 +29,7 @@ function GagModal() {
   });
 
   const postGagUp = async (data:any) =>{
-    console.log(data)
+    //console.log(data)
     const res = await GagupMutation.mutateAsync(data)
   }
 

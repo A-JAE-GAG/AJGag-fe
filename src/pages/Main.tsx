@@ -19,8 +19,8 @@ function Main (){
 {
   onSuccess:({ data })=>{
     setContentlist(data.data)
-    console.log(data.data)
-    console.log(data)
+    //console.log(data.data)
+    //console.log(data)
   }
 })
       return (<>
