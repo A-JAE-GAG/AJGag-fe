@@ -13,7 +13,6 @@ import { getLocalStorage } from '../utils/infos/loaclStorage';
 function GagList() {
   const { handleSubmit, control, watch } = useForm<FormData>();
   const [currentPageNum, setCurrentPageNum] = useState<number>(1)
-  const [standardPageNum, setStandardPageNum] = useState<number>(0)
   const [totalNum, setTotalNum] = useState<number>(1)
   const [contentlist, setContentlist] = useState<GagListCompProps[]>([])
   const [solvedlist, setSolvedlist] = useState<number[]>([])

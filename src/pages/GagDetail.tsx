@@ -211,9 +211,6 @@ const CheckMark = styled.img`
   animation: ${blinkingAnimation} 2s ease-in-out 0.4s infinite;
   `
 
-const GagAnswerForm = styled.div`
-    
-  `
 
 const decreaseAnimation = keyframes`
     from {width: 650px;} to {width: 25px;}
