@@ -13,7 +13,7 @@ import { getLocalStorage } from '../utils/infos/loaclStorage';
 function GagList() {
   const { handleSubmit, control, watch } = useForm<FormData>();
   const [currentPageNum, setCurrentPageNum] = useState<number>(1)
-  const [totalNum, setTotalNum] = useState<number>(1)
+  const [totalNum, setTotalNum] = useState<number>(0)
   const [contentlist, setContentlist] = useState<GagListCompProps[]>([])
   const [solvedlist, setSolvedlist] = useState<number[]>([])
 
@@ -27,9 +27,9 @@ function GagList() {
     //console.log(data)
     //비회원이라면
     if(getCookie("token") == null || undefined){
-      setTotalNum(data.data.totalPages)
+      setTotalNum(data.data.totalElements)
       setContentlist(data.data.content)
-      //console.log(getLocalStorage("solvedList"))
+      console.log(getLocalStorage("solvedList"))
       const savedSolvedList = getLocalStorage("solvedList");
 
       if (savedSolvedList !== null) {
@@ -38,7 +38,7 @@ function GagList() {
     }
     //회원이라면
     else{
-      setTotalNum(data.data.gagResponseDtoPage.totalPages)
+      setTotalNum(data.data.gagResponseDtoPage.totalElements)
       setContentlist(data.data.gagResponseDtoPage.content)
       setSolvedlist(data.data.visitedGags)
     }
@@ -58,9 +58,6 @@ function GagList() {
   const onSubmit = (data: FormData) => {
     //console.log('Form Data:', data);
   };
-
-  console.log(contentlist)
-
   return (<BackgroundBox>
     <UpsideBox>
       <>

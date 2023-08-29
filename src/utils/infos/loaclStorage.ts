@@ -7,6 +7,6 @@ export const setLocalStorage = (key :string, value :any) => {
   };
   
   export const removeLocalStorage = (key:string) => {
-    return localStorage.removeItem(key) as any;
+    return localStorage.removeItem(key);
   };
   

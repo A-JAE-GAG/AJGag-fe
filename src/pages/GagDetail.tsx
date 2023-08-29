@@ -7,6 +7,8 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import checkmark from "../assets/checkmark.svg"
 import cancel from "../assets/cancel.svg"
+import { getCookie } from '../utils/infos/cookie';
+import { getLocalStorage, setLocalStorage } from '../utils/infos/loaclStorage';
 
 function GagDetail() {
   const navigate = useNavigate()
@@ -25,6 +27,21 @@ function GagDetail() {
     {
       onSuccess: ({ data }) => {
         setGagData(data.data)
+        if(getCookie("token") == null || undefined){
+          //console.log(getLocalStorage("solvedList"))
+          const savedSolvedList = getLocalStorage("solvedList");
+          /*if (savedSolvedList !== null) {
+            const asd = [...savedSolvedList.split(','), detailId]
+            console.log(asd);
+          }*/
+          if (savedSolvedList !== null) {
+            if(savedSolvedList.indexOf(detailId as string) == -1){
+              console.log(savedSolvedList)
+              console.log(detailId)
+              setLocalStorage("solvedList", [...savedSolvedList.split(','), detailId]) 
+            }
+          }
+        }
       }
     }
   )

@@ -33,12 +33,16 @@ function Header (){
       };
     
 
-    return(<><HeaderBox>
+    return(<>
+      <HeaderBox>
       <h3 onClick={() => {navigate("/");}}>ㅇㅈ개그</h3>
-      {nickname !== null ? <NameBox><h5 onClick={()=>{navigate("/Profile")}}>{nickname}님 환영합니다!</h5><h5 onClick={() => onLogout()}>로그아웃</h5></NameBox>: <h4 onClick={()=> Loginstate(true)}>로그인/회원가입</h4>}
-      
-      
-          </HeaderBox>
+      {nickname !== null
+      ? <NameBox>
+        <h5 onClick={()=>{navigate("/Profile")}}>{nickname}님 환영합니다!</h5>
+        <h5 onClick={() => onLogout()}>로그아웃</h5>
+        </NameBox>
+      : <h4 onClick={()=> Loginstate(true)}>로그인/회원가입</h4>}
+      </HeaderBox>
       {GagModalState === true && <GagModal/>}
       {LoginState === true && <LoginModal />}
     </>)
