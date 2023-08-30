@@ -28,7 +28,7 @@ function GagDetail() {
       onSuccess: ({ data }) => {
         setGagData(data.data)
         if(getCookie("token") == null || undefined){
-          //console.log(getLocalStorage("solvedList"))
+          //console.log(getLocalStorage("solvedList")) 
           const savedSolvedList = getLocalStorage("solvedList");
           /*if (savedSolvedList !== null) {
             const asd = [...savedSolvedList.split(','), detailId]
