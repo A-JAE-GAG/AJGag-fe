@@ -7,7 +7,7 @@ import { AxiosError } from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
 import { gagModalState } from '../store/atom';
-import { GagBoxBackColor, GagListCompProps } from '../utils/infos/types';
+import { GagBoxBackColor, GagDetailPage, GagListCompProps } from '../utils/infos/types';
 import Pagination from 'react-js-pagination';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
@@ -19,8 +19,9 @@ function GagListComp (props : GagListCompProps){
     const ondel = await DeleteMutation.mutateAsync(data)
 }
 
-const DeleteMutation = useMutation<any>(deleteMyGag, {
-    onSuccess: ({ data }) => {
+//<any>붙인게 에러라고?
+const DeleteMutation= useMutation(deleteMyGag, {
+    onSuccess: () => {
       window.alert("삭제 성공")
       window.location.reload()
     },

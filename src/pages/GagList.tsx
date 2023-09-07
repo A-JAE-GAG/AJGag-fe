@@ -22,9 +22,6 @@ function GagList() {
   () => getGagPage({page : currentPageNum, size : 15, sort: selectedOption}),
 {
   onSuccess:({ data })=>{
-    //console.log(data.data.content)
-    //console.log(data.data)
-    //console.log(data)
     //비회원이라면
     if(getCookie("token") == null || undefined){
       setTotalNum(data.data.totalElements)
@@ -49,14 +46,6 @@ function GagList() {
   const handleButtonClick = (value: string) => {
     setSelectedOption(value);
     //console.log(value); // Log the selected value to the console
-  };
-
-  const pageChange = (page:number) =>{
-    //console.log(page)
-  }
-
-  const onSubmit = (data: FormData) => {
-    //console.log('Form Data:', data);
   };
   return (<BackgroundBox>
     <UpsideBox>

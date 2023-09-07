@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { getLocalStorage } from '../utils/infos/loaclStorage';
 import { gagModalState } from '../store/atom';
 import { useNavigate } from 'react-router-dom';
-import { ButtonProps } from '../utils/infos/types';
+import { ButtonProps, PostGagType } from '../utils/infos/types';
 
 function GagModal() {
 
@@ -17,7 +17,7 @@ function GagModal() {
   const { register, handleSubmit, control, watch, formState } = useForm();
   const GagModalState = useSetRecoilState(gagModalState)
 
-  const GagupMutation = useMutation<any>(postGag,{
+  const GagupMutation = useMutation(postGag,{
     onSuccess: ({ data }) => {
       //console.log("업로드 성공")
       navigate('/')
@@ -28,8 +28,7 @@ function GagModal() {
     },
   });
 
-  const postGagUp = async (data:any) =>{
-    //console.log(data)
+  const postGagUp = async (data:PostGagType) =>{
     const res = await GagupMutation.mutateAsync(data)
   }
 
@@ -44,7 +43,7 @@ function GagModal() {
       <ModalHead>
         <h3>개그 올려보기</h3>
       </ModalHead>
-      <GagUpForm onSubmit={handleSubmit(postGagUp)}>
+      <GagUpForm onSubmit={handleSubmit(postGagUp as any)}>
         <InputWrapper>
           <InputTextBox>
             <h3>개그 제목</h3>

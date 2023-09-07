@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from "../infos/cookie";
 import { setLocalStorage } from "../infos/loaclStorage";
-import { GagAnswer, GagDetailPage, GagListGet } from "../infos/types";
+import { GagAnswer, GagDetailDelete, GagDetailPage, GagListGet, PostGagType } from "../infos/types";
 import Axios from "./axios";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
@@ -75,9 +75,8 @@ export const postEmailConfirm = async (data : any)  => {
   }
 
   //개그 타입 만들 필요
-  export const postGag = async (data :any) =>{
+  export const postGag = async (data :PostGagType) =>{
     const cookie = getCookie("token");
-    const { Id } = data;
     const headers = {
       Authorization: cookie
     };
@@ -111,7 +110,7 @@ export const postEmailConfirm = async (data : any)  => {
     return res;
   }; 
 
-  export const deleteMyGag =async (data :any) => {
+  export const deleteMyGag =async (data :GagDetailDelete) => {
     const { Id } = data;
     const cookie = getCookie("token");
     const headers = {

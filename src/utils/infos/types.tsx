@@ -33,6 +33,12 @@ export interface GagDetailContent{
   prevGagId:number | null;
 }
 
+export interface PostGagType{
+  title : string;
+  content : string;
+  answer : string;
+}
+
 export interface GagListCompProps{
   solved: boolean;
   author: string;
@@ -42,8 +48,13 @@ export interface GagListCompProps{
   gagId:number;
   title:string;
 }
+
+export interface GagDetailDelete{
+  Id:string;
+}
+
 export interface GagDetailPage{
-  Id:string| null;
+  Id:string|null;
 }
 export interface GagListGet{
   page: number;
